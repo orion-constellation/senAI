@@ -1,5 +1,5 @@
 # 🌩️ Orion Sensai
-#### Your Powerful but Quiet Cyber Protection
+#### Your powerful but quiet cyber protection and cyber posture education resource.
 
 Welcome to Sensai, the future of simple yet sophisticated cybersecurity for businesses of all sizes. Powered by cutting-edge machine learning, Sensai silently monitors, detects, and neutralizes cyber threats before they affect your business. Like a quiet teacher, it learns what you need and it makes sure you are always up to date protected.
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## 🌩️ Orion Sensai
 #### Your Powerful but Quiet Cyber Protection
 
@@ -44,3 +45,7 @@ For more information or custom solutions, don't hesitate to contact us at 📧 n
 
 🌟 Let's Keep You Safe!
 Thank you for choosing Sensai to protect your business. We're committed to providing quiet, powerful, and affordable cybersecurity so you can focus on what you do best — running your business.
+=======
+# senAI
+Your cybersecurity assistant for business or personal use. Collaborative attack detection.
+>>>>>>> 74bf24c4ea9ea9ca5b985ba4916e6e79c55bc19c

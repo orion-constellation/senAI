@@ -1,101 +1,149 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect, useCallback } from "react";
+import { Button } from "@/app/components/ui/buttons/Button";
+//import { Input } from "@/app/components/ui/input/Input";
+import { Card, CardHeader, CardTitle, CardContent } from "@/app/components/ui/card/Card";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css'
+import { Google, Zap } from "lucide-react";
+
+
+
+export function OrionAnalysisTool() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isToolOpen, setIsToolOpen] = useState(false);
+  const [selectedFunction, setSelectedFunction] = useState("");
+  const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [notification, setNotification] = useState("");
+  const [showLightning, setShowLightning] = useState(false);
+  return { setIsLoggedIn, setIsToolOpen, setSelectedFunction, setResult, setIsLoading, setNotification, setShowLightning }
+}
+
+const performAnalysis = async (input: string) => {
+  console.log("Performing analysis on:", input);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return `Analysis result for: ${input}`;
+};
+
+const loginWithGoogle = async () => {
+  console.log("Logging in with Google");
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return true;
+};
+
+
+const handleGoogleLogin = async () => {
+  try {
+    const success = await loginWithGoogle();
+    if (success) {
+      setIsLoggedIn(true);
+    }
+  } catch (error) {
+    console.error("Error logging in", error);
+    // Provide feedback to the user in case of an error
+  }
+};
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const success = await loginWithGoogle();
+      if (success) {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleInput = async () => {
+    if (selectedFunction) {
+      setIsLoading(true);
+      try {
+        const analysisResult = await performAnalysis(selectedFunction);
+        setResult(analysisResult);
+      } catch (error) {
+        console.error("Error during analysis", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const toggleTool = useCallback(() => {
+    if (isLoggedIn) {
+      setIsToolOpen((prev) => !prev);
+    } else {
+      alert("Please log in first");
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.metaKey && event.altKey && event.key === "d") {
+        toggleTool();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [toggleTool]);
+
+  OrionAnalysisTool()
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+      {!isLoggedIn && (
+        <div className="flex space-x-4 mb-6">
+          <Button onClick={handleLogin} className="bg-white text-black">
+            {isLoading ? "Loading..." : "Login"}
+          </Button>
+          <Button onClick={handleGoogleLogin} className="bg-white text-black">
+            <Google className="mr-2 h-4 w-4" />
+            Login with Google
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      )}
+
+      {isLoggedIn && isToolOpen && (
+        <Card className="w-96 bg-black text-white border-2 border-green-500 shadow-lg relative">
+          <CardHeader>
+            <CardTitle className="text-right text-sm text-white">Orion Analysis Tool</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <select
+              className="bg-white text-black border-2 border-green-500 rounded-lg h-10 px-3 py-2 w-full"
+              value={selectedFunction}
+              onChange={(e) => setSelectedFunction(e.target.value)}
+            >
+              <option value="" disabled>
+                Select a function
+              </option>
+              <option value="get_cyber_info">get_cyber_info</option>
+              <option value="run analysis">run analysis</option>
+            </select>
+
+            <Button onClick={handleInput} className="w-full bg-white text-black mt-4">
+              {isLoading ? "Processing..." : "Submit"}
+            </Button>
+
+            {result && (
+              <div className="mt-4 bg-white text-black p-3 border-2 border-green-500 rounded-lg">
+                {result}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
-}

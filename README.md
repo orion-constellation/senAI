@@ -12,9 +12,10 @@ Sensai is Cybersecurity-as-a-Service (CaaS) delivered in the simplest way possib
 - Global Threat Intelligence: Leverage data from other Sensai users for broader protection.
 - Stay Secure: Protect your data, assets, and business at a fraction of the cost of traditional cybersecurity.
 - No hassle, no extra hardware, no complicated setup — Sensai has you covered.
+- Chat with your SensAI for customised, personalized interaction.
 
 🛡️ How Does It Protect Me?
-For you, Sensai is just one line of code, but behind the scenes, a sophisticated threat intelligence system is constantly working to protect your business.
+For you, Sensai is just one command, but behind the scenes, a sophisticated threat intelligence system is constantly working to protect your business.
 
 Continuous Monitoring: Sensai tracks and monitors threats across the public internet affecting a network of businesses like yours.
 AI-Powered: Our artificial intelligence engine identifies and mitigates threats in real-time — all without using any of your proprietary data.
